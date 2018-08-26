@@ -140,11 +140,11 @@ Valid Values: airline-directory-full, airline-directory-shortened, nil (disabled
 
 
            (if (eq airline-display-directory 'airline-directory-shortened)
-             (propertize (concat (airline-shorten-directory (eshell/pwd) airline-shortened-directory-length) " ") 'face
-                         `(:foreground ,(face-foreground 'airline-insert-inner) :background ,(face-background 'airline-insert-inner)))
+               (propertize (concat (airline-shorten-directory (eshell/pwd) airline-shortened-directory-length) " ") 'face
+                           `(:foreground ,(face-foreground 'airline-insert-inner) :background ,(face-background 'airline-insert-inner)))
              (propertize (concat (abbreviate-file-name (eshell/pwd)) " ") 'face
                          `(:foreground ,(face-foreground 'airline-insert-inner) :background ,(face-background 'airline-insert-inner)))
-           )
+             )
 
            (propertize (concat (char-to-string airline-utf-glyph-separator-left) " ") 'face
                        `(:foreground ,(face-background 'airline-insert-inner) :background ,(face-background 'airline-insert-center)))
@@ -231,12 +231,12 @@ Valid Values: airline-directory-full, airline-directory-shortened, nil (disabled
                                          ;; Modified string
                                          (powerline-raw "%*" inner-face 'l)
                                          )
-                                        (list
-                                         ;; Modified string
-                                         (powerline-raw "%*" outer-face 'l)
-                                         ;; Separator >
-                                         (powerline-raw " " outer-face)
-                                         (funcall separator-left outer-face inner-face))))
+                                      (list
+                                       ;; Modified string
+                                       (powerline-raw "%*" outer-face 'l)
+                                       ;; Separator >
+                                       (powerline-raw " " outer-face)
+                                       (funcall separator-left outer-face inner-face))))
 
                           (lhs-rest (list
                                      ;; ;; Separator >
@@ -280,7 +280,7 @@ Valid Values: airline-directory-full, airline-directory-shortened, nil (disabled
                                      ;; ;; Separator <
                                      ;; (powerline-raw " " face1)
                                      ;; (funcall separator-right face1 face2)
-                                   ))
+                                     ))
 
                           (lhs (append lhs-mode lhs-rest))
 
@@ -383,7 +383,7 @@ Valid Values: airline-directory-full, airline-directory-shortened, nil (disabled
    `(mode-line-inactive    ((t ( :foreground ,inactive1-foreground     :background ,inactive1-background     :box nil :underline nil :overline nil))))
    `(mode-line-buffer-id   ((t ( :foreground ,normal-outer-foreground  :background ,normal-outer-background  :box nil :underline nil :overline nil))))
    `(minibuffer-prompt     ((t ( :foreground ,normal-outer-foreground  :background ,normal-outer-background  :box nil))))
-  ))
+   ))
 
 (defun airline-curr-dir-git-branch-string (pwd)
   "Returns current git branch as a string, or the empty string if
@@ -427,8 +427,8 @@ the path down to `MAX-LENGTH'"
             len (- len (1- (length (car components))))
             components (cdr components)))
     (concat str (cl-reduce (lambda (a b) (concat a "/" b)) components))
+    )
   )
-)
 
 (provide 'airline-themes)
 ;;; airline-themes.el ends here
