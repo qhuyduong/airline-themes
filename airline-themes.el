@@ -432,11 +432,14 @@ PWD is not in a git repo (or the git command is not found)."
   "Reimplementation of powerline-vc function to give the same result in gui as the terminal."
   (interactive)
   (when (and (buffer-file-name (current-buffer)) vc-mode)
-    (format " %s %s"
-            (char-to-string airline-utf-glyph-branch)
-            (if (featurep 'magit)
-                (magit-get-current-branch)
-              (format-mode-line '(vc-mode vc-mode))))))
+    (setq branch (format " %s %s"
+                         (char-to-string airline-utf-glyph-branch)
+                         (if (featurep 'magit)
+                             (magit-get-current-branch)
+                           (format-mode-line '(vc-mode vc-mode)))))
+    (if (> (length branch) 24)
+        (s-concat (s-left 14 branch) "..." (s-right 10 branch))
+      branch)))
 
 (defun airline-shorten-directory (dir max-length)
   "Return a shortened version of `DIR'.
