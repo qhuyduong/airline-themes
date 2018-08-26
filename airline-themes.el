@@ -74,7 +74,7 @@ Valid Values: t (enabled), nil (disabled)"
                  (const :tag "Disabled" nil)))
 
 (defcustom airline-minor-modes t
-  "Set wether to display the minor modes or not.
+  "Set whether to display the minor modes or not.
 
 Valid Values: t (enabled), nil (disabled)"
   :group 'airline-themes
@@ -82,7 +82,15 @@ Valid Values: t (enabled), nil (disabled)"
                  (const :tag "Disabled" nil)))
 
 (defcustom airline-flycheck-status nil
-  "Set wether to display the flycheck status.
+  "Set whether to display the flycheck status.
+
+Valid Values: t (enabled), nil (disabled)"
+  :group 'airline-themes
+  :type '(choice (const :tag "Enabled" t)
+                 (const :tag "Disabled" nil)))
+
+(defcustom airline-shortened-vc-info nil
+  "Set whether to shorten VC info.
 
 Valid Values: t (enabled), nil (disabled)"
   :group 'airline-themes
@@ -437,7 +445,7 @@ PWD is not in a git repo (or the git command is not found)."
                          (if (featurep 'magit)
                              (magit-get-current-branch)
                            (format-mode-line '(vc-mode vc-mode)))))
-    (if (> (length branch) 24)
+    (if (and airline-shortened-vc-info (> (length branch) 24))
         (s-concat (s-left 14 branch) "..." (s-right 10 branch))
       branch)))
 
