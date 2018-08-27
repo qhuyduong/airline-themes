@@ -156,6 +156,14 @@ Valid Values: airline-directory-full, airline-directory-shortened, nil (disabled
   :type '(choice (const :tag "powerline #xe0a1"     #xe0a1)
                  (const :tag "vim-powerline #x2b61" #x2b61)))
 
+(defcustom airline-utf-glyph-css #xe614
+  "The unicode character number used for the css symbol."
+  :group 'airline-themes)
+
+(defcustom airline-utf-glyph-haskell #xe777
+  "The unicode character number used for the haskell symbol."
+  :group 'airline-themes)
+
 (defcustom airline-utf-glyph-html #xe60e
   "The unicode character number used for the html symbol."
   :group 'airline-themes)
@@ -188,16 +196,24 @@ Valid Values: airline-directory-full, airline-directory-shortened, nil (disabled
   "The unicode character number used for the shell symbol."
   :group 'airline-themes)
 
+(defcustom airline-utf-glyph-vimscript #xe7c5
+  "The unicode character number used for the vimscript symbol."
+  :group 'airline-themes)
+
 (defun airline-major-mode (&optional face pad)
   (setq glyph
         (pcase mode-name
-          ("Web" (char-to-string airline-utf-glyph-html))
+          ("CSS"            (char-to-string airline-utf-glyph-css))
+          ("Emacs-Lisp"     (char-to-string airline-utf-glyph-haskell)) ;; Sorry Emacs's fan about this
+          ("Web"            (char-to-string airline-utf-glyph-html))
           ("Javascript-IDE" (char-to-string airline-utf-glyph-js))
-          ("JSON" (char-to-string airline-utf-glyph-json))
-          ("RJSX" (char-to-string airline-utf-glyph-jsx))
-          ("Markdown" (char-to-string airline-utf-glyph-markdown))
-          ("EnhRuby" (char-to-string airline-utf-glyph-ruby))
-          ("Shell-script" (char-to-string airline-utf-glyph-shell))
+          ("JSON"           (char-to-string airline-utf-glyph-json))
+          ("RJSX"           (char-to-string airline-utf-glyph-jsx))
+          ("Markdown"       (char-to-string airline-utf-glyph-markdown))
+          ((or "Ruby"
+               "EnhRuby")   (char-to-string airline-utf-glyph-ruby))
+          ("Shell-script"   (char-to-string airline-utf-glyph-shell))
+          ("Vimrc"          (char-to-string airline-utf-glyph-vimscript))
           (_ nil)))
   (if glyph
       (powerline-raw (concat glyph " " mode-name) face pad)
