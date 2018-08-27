@@ -73,6 +73,14 @@ Valid Values: t (enabled), nil (disabled)"
   :type '(choice (const :tag "Enabled" t)
                  (const :tag "Disabled" nil)))
 
+(defcustom airline-major-mode t
+  "Set whether to use airline-major-mode over powerline-major-mode.
+
+Valid Values: t (enabled), nil (disabled)"
+  :group 'airline-themes
+  :type '(choice (const :tag "Enabled" t)
+                 (const :tag "Disabled" nil)))
+
 (defcustom airline-minor-modes t
   "Set whether to display the minor modes or not.
 
@@ -147,6 +155,53 @@ Valid Values: airline-directory-full, airline-directory-shortened, nil (disabled
   :group 'airline-themes
   :type '(choice (const :tag "powerline #xe0a1"     #xe0a1)
                  (const :tag "vim-powerline #x2b61" #x2b61)))
+
+(defcustom airline-utf-glyph-html #xe60e
+  "The unicode character number used for the html symbol."
+  :group 'airline-themes)
+
+(defcustom airline-utf-glyph-js #xe60c
+  "The unicode character number used for the js symbol."
+  :group 'airline-themes)
+
+(defcustom airline-utf-glyph-json #xe60b
+  "The unicode character number used for the json symbol."
+  :group 'airline-themes)
+
+(defcustom airline-utf-glyph-jsx #xe7ba
+  "The unicode character number used for the jsx symbol."
+  :group 'airline-themes)
+
+(defcustom airline-utf-glyph-markdown #xe609
+  "The unicode character number used for the markdown symbol."
+  :group 'airline-themes)
+
+(defcustom airline-utf-glyph-python #xe606
+  "The unicode character number used for the python symbol."
+  :group 'airline-themes)
+
+(defcustom airline-utf-glyph-ruby #xe791
+  "The unicode character number used for the ruby symbol."
+  :group 'airline-themes)
+
+(defcustom airline-utf-glyph-shell #xe795
+  "The unicode character number used for the shell symbol."
+  :group 'airline-themes)
+
+(defun airline-major-mode (&optional face pad)
+  (setq glyph
+        (pcase mode-name
+          ("Web" (char-to-string airline-utf-glyph-html))
+          ("Javascript-IDE" (char-to-string airline-utf-glyph-js))
+          ("JSON" (char-to-string airline-utf-glyph-json))
+          ("RJSX" (char-to-string airline-utf-glyph-jsx))
+          ("Markdown" (char-to-string airline-utf-glyph-markdown))
+          ("EnhRuby" (char-to-string airline-utf-glyph-ruby))
+          ("Shell-script" (char-to-string airline-utf-glyph-shell))
+          (_ nil)))
+  (if glyph
+      (powerline-raw (concat glyph " " mode-name) face pad)
+    (powerline-raw mode-name face pad)))
 
 (defun airline-themes-set-eshell-prompt ()
   "Set the eshell prompt."
@@ -335,7 +390,9 @@ Valid Values: airline-directory-full, airline-directory-shortened, nil (disabled
                                        (powerline-raw (char-to-string airline-utf-glyph-subseparator-right) center-face 'l))
 
                                      ;; Major Mode
-                                     (powerline-major-mode center-face 'l)
+                                     (if (eq airline-major-mode t)
+                                         (airline-major-mode center-face 'l)
+                                       (powerline-major-mode center-face 'l))
                                      (powerline-process center-face)
 
                                      ;; Separator <
